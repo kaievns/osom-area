@@ -20,4 +20,6 @@ include 'src/resizer'
 include 'src/selection'
 
 return ext OsomArea,
-  version: '%{version}'
+  Resizer:   Resizer
+  Selection: Selection
+  version:   '%{version}'
