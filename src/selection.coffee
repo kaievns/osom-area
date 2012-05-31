@@ -11,7 +11,10 @@ class Selection
   # @return {Selection} this
   #
   constructor: (textarea)->
-    @textarea = textarea
+    @textarea = textarea.on
+      blur:  -> @selection.save()    if @options.keepselection
+      focus: -> @selection.restore() if @options.keepselection
+
     return @
 
   #
@@ -43,7 +46,6 @@ class Selection
       start  = result if start  > result
       finish = result if finish > result
 
-      textarea.focus()
       textarea.setSelectionRange(start, finish)
 
     return [start, finish]
@@ -69,3 +71,18 @@ class Selection
       start  = @position()
 
       @textarea._.value.substring(start[0], start[1])
+
+  #
+  # Saves the current selection position
+  #
+  save: ->
+    @_stash = @position()
+
+  #
+  # Restores previously saved position
+  #
+  restore: ->
+    if @_stash
+      window.setTimeout =>
+        @position(@_stash[0], @_stash[1])
+      , 1

@@ -7,7 +7,8 @@ class OsomArea extends Input
   include: core.Options
   extend:
     Options: # default options
-      autoresize: true
+      autoresize:    true
+      keepselection: false
 
   resizer:   null
   selection: null
