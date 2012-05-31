@@ -4,6 +4,11 @@
 # Copyright (C) 2012 Nikolay Nemshilov
 #
 class OsomArea extends Input
+  include: core.Options
+  extend:
+    Options: # default options
+      autoresize: true
+
   resizer:   null
   selection: null
 
@@ -20,7 +25,7 @@ class OsomArea extends Input
     @resizer   = new Resizer(@)
     @selection = new Selection(@)
 
-    return @
+    @setOptions(options)
 
   #
   # Universal method to work with the selections

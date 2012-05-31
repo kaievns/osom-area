@@ -26,7 +26,7 @@ class Resizer extends Element
     @min_height = osom_area._.offsetHeight
 
     osom_area.on 'focus', => @getReady(osom_area)
-    osom_area.on 'keyup', => @autoResize(osom_area)
+    osom_area.on 'keyup', => @autoResize(osom_area) if osom_area.options.autoresize
 
     @autoResize(osom_area)
 
