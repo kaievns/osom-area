@@ -8,7 +8,7 @@
       Lovely(["osom-area"], function(OsomArea) {
         var $ = Lovely.module('dom');
         $(function() {
-          new OsomArea($('test-1')[0]._);
+          new OsomArea('#test-1');
         });
       });
     </script>
@@ -23,7 +23,9 @@
     </style>
   </head>
   <body>
-    <h1>Osom-Area Demo</h1>
+    <h1>OsomArea Demo</h1>
+
+    <h2>Simple Auto-Resizable TextArea</h2>
     <p>
       <textarea id="test-1"></textarea>
     </p>
