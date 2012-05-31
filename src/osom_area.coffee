@@ -4,7 +4,12 @@
 # Copyright (C) 2012 Nikolay Nemshilov
 #
 class OsomArea extends Input
+  resizer:   null
+  selection: null
 
+  #
+  # Basic constructor
+  #
   constructor: (element, options)->
     element = $(element) if typeof(element) is 'string'
     element = element[0] if element instanceof $.NodeList
@@ -12,6 +17,23 @@ class OsomArea extends Input
 
     super element
 
-    @resizer = new Resizer(@)
+    @resizer   = new Resizer(@)
+    @selection = new Selection(@)
 
     return @
+
+  #
+  # Universal method to work with the selections
+  #
+  # @param {String|Number} a text to select or the selection start position
+  # @param {String|Number} the finish position
+  # @return {OsomArea} this
+  #
+  select: (start, finish)->
+    if !start?
+      return @selection.position()
+    else if !finish?
+      return @selection.text(start)
+    else
+      @selection.position(start, finish)
+      return @

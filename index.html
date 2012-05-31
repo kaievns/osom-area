@@ -8,17 +8,41 @@
       Lovely(["osom-area"], function(OsomArea) {
         var $ = Lovely.module('dom');
         $(function() {
-          new OsomArea('#test-1');
+          var t1 = new OsomArea('#test-1');
+          var t2 = new OsomArea('#test-2');
+
+          t2.on('keyup', function() {
+            $('#select-range').value(this.select().join('-'));
+            $('#select-text').value(this.selection.text());
+          })
+
+          $('#select-text').on('keyup', function(event) {
+            if (event.keyCode == 13) {
+              t2.select(this.value());
+            }
+          });
+
+          $('#select-range').on('keyup', function(event) {
+            var match = this.value().match(/(\d+)\s*\-\s*(\d+)/);
+            if (match && event.keyCode == 13) {
+              t2.select(match[1], match[2]);
+            }
+          });
         });
       });
     </script>
     <style>
-      textarea {
+      #test-1, #test-2 {
         width:  32em;
         height: 4em;
         font:   inherit;
         border: 1px solid rgba(0,0,0,.2);
         border-radius: .25em;
+      }
+      #selection-inputs * {
+        display: inline;
+        vertical-align: middle;
+        width: 10em;
       }
     </style>
   </head>
@@ -28,6 +52,18 @@
     <h2>Simple Auto-Resizable TextArea</h2>
     <p>
       <textarea id="test-1"></textarea>
+    </p>
+
+    <h2>Selections Handling</h2>
+    <p>
+      <textarea id="test-2">Lorem ipsum bla bla bla</textarea>
+
+      <div id="selection-inputs">
+        <label>Select text:</label>
+        <input type="text" id="select-text" placeholder="Type in a word">
+        <label>Select range:</label>
+        <input type="text" id="select-range" placeholder="0-0">
+      </div>
     </p>
   </body>
 </html>

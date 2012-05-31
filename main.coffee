@@ -17,6 +17,7 @@ Input   = $.Input
 # glue in your files
 include 'src/osom_area'
 include 'src/resizer'
+include 'src/selection'
 
 return ext OsomArea,
   version: '%{version}'
