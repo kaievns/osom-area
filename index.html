@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Osom-Area Demo</title>
+    <link href="/shared.css" rel="stylesheet" type="text/css" />
+    <script src="/core.js"></script>
+    <script type="text/javascript">
+      Lovely(["osom-area"], function(OsomArea) {
+        var $ = Lovely.module('dom');
+        $(function() {
+          new OsomArea($('test-1')[0]._);
+        });
+      });
+    </script>
+    <style>
+      textarea {
+        width:  32em;
+        height: 4em;
+        font:   inherit;
+        border: 1px solid rgba(0,0,0,.2);
+        border-radius: .25em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Osom-Area Demo</h1>
+    <p>
+      <textarea id="test-1"></textarea>
+    </p>
+  </body>
+</html>
