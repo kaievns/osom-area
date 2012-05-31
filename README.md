@@ -35,6 +35,7 @@ Additionally it has a shortcut method to work with the selections, called `#sele
 
 Also every `OsomArea` instances has a property called `selection` with the following API
 
+    :js
     area.selection.position();     // returns the current selection position
     area.selection.position(1,22); // sets current selection position
 

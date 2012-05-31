@@ -1,7 +1,12 @@
 {
   "name":        "osom-area",
-  "version":     "0.0.0",
-  "description": "My super lovely module",
+  "version":     "1.0.0",
+  "description": "Advanced textarea handling features",
   "author":      "Nikolay Nemshilov",
-  "license":     "MIT"
+  "home_url":    "https://github.com/MadRabbit/nanny",
+  "license":     "MIT",
+  "tags":        "forms,textarea",
+  "dependencies": {
+    "dom"  : "1.2.0"
+  }
 }
