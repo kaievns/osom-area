@@ -7,6 +7,7 @@
 # hook up dependencies
 core    = require('core')
 $       = require('dom')
+UI      = require('ui')
 
 # local variables assignments
 ext     = core.ext

@@ -3,10 +3,11 @@
   "version":     "1.0.0",
   "description": "Advanced textarea handling features",
   "author":      "Nikolay Nemshilov",
-  "home_url":    "https://github.com/MadRabbit/nanny",
+  "home_url":    "https://github.com/MadRabbit/osom-area",
   "license":     "MIT",
   "tags":        "forms,textarea",
   "dependencies": {
-    "dom"  : "1.2.0"
+    "dom"  : "1.2.0",
+    "ui"   : "1.2.0"
   }
 }
