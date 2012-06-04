@@ -13,7 +13,7 @@
           var t3 = new OsomArea('#test-3');
 
           t2.on('keyup', function() {
-            $('#select-range').value(this.select().join('-'));
+            $('#select-range').value(this.selection.offsets().join('-'));
             $('#select-text').value(this.selection.text());
           })
 

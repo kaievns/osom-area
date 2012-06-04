@@ -33,17 +33,17 @@ class OsomArea extends Input
   #
   # Universal method to work with the selections
   #
-  # @param {String|Number} a text to select or the selection start position
-  # @param {String|Number} the finish position
+  # @param {String|Number} a text to select or the selection start offset
+  # @param {Number} the selection finish offset
   # @return {OsomArea} this
   #
   select: (start, finish)->
     if !start?
-      return @selection.position()
+      return @selection.offsets()
     else if !finish?
       return @selection.text(start)
     else
-      @selection.position(start, finish)
+      @selection.offsets(start, finish)
       return @
 
   #
@@ -68,7 +68,6 @@ class OsomArea extends Input
         @menu.update("<a href='#'>#{attr.join("</a><a href='#'>")}</a>")
 
     @_requesting = false
-    @menu.showAt(@)
 
     return @
 

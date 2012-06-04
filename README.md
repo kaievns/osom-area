@@ -36,14 +36,14 @@ Additionally it has a shortcut method to work with the selections, called `#sele
 Also every `OsomArea` instances has a property called `selection` with the following API
 
     :js
-    area.selection.position();     // returns the current selection position
-    area.selection.position(1,22); // sets current selection position
+    area.selection.offsets();         // returns the current selection offsets
+    area.selection.offsets(1,22);     // sets current selection offsets
 
-    area.selection.text();         // returns currently selected text
+    area.selection.text();            // returns currently selected text
     area.selection.text('some text'); // selects matching text in the textarea
 
-    area.selection.save();         // saves the current selection range
-    area.selection.restore();      // restores previously saved selection range
+    area.selection.save();            // saves the current selection range
+    area.selection.restore();         // restores previously saved selection range
 
 ## Options
 

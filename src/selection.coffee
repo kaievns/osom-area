@@ -18,13 +18,13 @@ class Selection
     return @
 
   #
-  # Sets/reads the current selection position
+  # Sets/reads the current selection offsets
   #
-  # @param {String|Numeric} the start position
-  # @param {String|Numeric} the end position
-  # @return {Array} selection position `[start, finish]`
+  # @param {String|Numeric} the start offset
+  # @param {String|Numeric} the end offset
+  # @return {Array} selection offsets `[start, finish]`
   #
-  position: (start, finish)->
+  offsets: (start, finish)->
     textarea = @textarea._
 
     if !start? # read it
@@ -66,23 +66,23 @@ class Selection
       else
         start = finish + text.length
 
-      @position(start, finish)
+      @offsets(start, finish)
     else
-      start  = @position()
+      start  = @offsets()
 
       @textarea._.value.substring(start[0], start[1])
 
   #
-  # Saves the current selection position
+  # Saves the current selection offsets
   #
   save: ->
-    @_stash = @position()
+    @_stash = @offsets()
 
   #
-  # Restores previously saved position
+  # Restores previously saved offsets
   #
   restore: ->
     if @_stash
       window.setTimeout =>
-        @position(@_stash[0], @_stash[1])
-      , 1
+        @offsets(@_stash[0], @_stash[1])
+      , 0
