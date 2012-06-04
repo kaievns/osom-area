@@ -73,6 +73,14 @@ class Selection
       @textarea._.value.substring(start[0], start[1])
 
   #
+  # Calculates the absolute physical offset of the current selection start
+  #
+  # @return {Object} selection position {x: NNN, y: NNN}
+  #
+  position: ->
+    @textarea.resizer.textEndPosition(@textarea._.value.substr(0, @offsets[0]))
+
+  #
   # Saves the current selection offsets
   #
   save: ->

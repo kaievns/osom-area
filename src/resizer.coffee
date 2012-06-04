@@ -23,7 +23,10 @@ class Resizer extends Element
       whiteSpace: 'pre'
       wordWrap:   'break-word'
 
+    @textarea   = osom_area
+
     @min_height = osom_area._.offsetHeight
+    @marker     = new Element('div', style: 'display: inline-block; margin: 0; padding: 0; margin-top: 1.2em')
 
     osom_area.on 'focus', => @getReady(osom_area)
     osom_area.on 'keyup', => @autoResize(osom_area) if osom_area.options.autoresize
@@ -54,4 +57,22 @@ class Resizer extends Element
     if height > @min_height
       original._.style.height = height + 'px'
     return @
+
+
+  #
+  # Calculates the absolute position of the end of the text
+  #
+  # @param {String} text to measure
+  # @return {Object} x-y positions
+  #
+  textEndPosition: (text)->
+    @_.innerHTML = text
+    @insert(@marker)
+
+    self_position = @position()
+    mark_position = @marker.position()
+    text_position = @textarea.position()
+
+    x: text_position.x + mark_position.x - self_position.x
+    y: text_position.y + mark_position.y - self_position.y
 

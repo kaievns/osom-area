@@ -65,9 +65,17 @@ class OsomArea extends Input
       when 'string'
         @menu.update(attr)
       when 'object'
-        @menu.update("<a href='#'>#{attr.join("</a><a href='#'>")}</a>")
+        if attr.length is 0
+          @menu.clear()
+        else
+          @menu.update("<a href='#'>#{attr.join("</a><a href='#'>")}</a>")
 
     @_requesting = false
+
+    unless @menu.empty()
+      @menu.insertTo(@, 'after')
+      @menu.position(@selection.position())
+      @menu.show()
 
     return @
 
@@ -88,5 +96,6 @@ class OsomArea extends Input
         @_timeout && global.clearTimeout(@_timeout)
         @_timeout = global.setTimeout =>
           @_requesting = true
+          @menu.hide()
           callback.call(@, last_word)
         , 200
