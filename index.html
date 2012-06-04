@@ -31,25 +31,15 @@
           });
 
           // autocompletion through google-complete hack
-          var requesting = false, timeout = false;
-          t3.on('keyup', function(event) {
+          t3.autocomplete(function(last_word) {
             var url  = "http://suggestqueries.google.com/complete/search?client=chrome&q=";
-            var text = this._.value.substr(0, this.selection.position()[0]);
+                url += encodeURIComponent(last_word.replace(/[_-]+/g, ' '));
 
-            if (text != false && !requesting) {
-              timeout && window.clearTimeout(timeout);
+            console.log(last_word, this);
 
-              timeout = window.setTimeout(function() {
-                requesting = true;
-
-                url += encodeURIComponent(text.split(/\s+/).pop().replace(/[_-]+/g, ' '));
-
-                Ajax.get(url, {jsonp: 'callback', success: function() {
-                  requesting = false;
-                  console.log(this.responseJSON[1]);
-                }});
-              }, 200);
-            }
+            Ajax.get(url, {jsonp: 'callback', success: function() {
+              t3.autocomplete(this.responseJSON[1]);
+            }});
           });
         });
       });

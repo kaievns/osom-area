@@ -12,6 +12,7 @@ class OsomArea extends Input
 
   resizer:   null
   selection: null
+  menu:      null
 
   #
   # Basic constructor
@@ -25,6 +26,7 @@ class OsomArea extends Input
 
     @resizer   = new Resizer(@)
     @selection = new Selection(@)
+    @menu      = new UI.Menu()
 
     @setOptions(options)
 
@@ -43,3 +45,49 @@ class OsomArea extends Input
     else
       @selection.position(start, finish)
       return @
+
+  #
+  # Autocompleter functionality
+  #
+  #     Lovely(['osom-area', 'ajax'], function(last_word) {
+  #       Ajax.get('some.url?=q'+ last_word, {success: function(response) {
+  #         this.autocomplete(response.responseText);
+  #       }});
+  #     })
+  #
+  # @param {Function|Array} inital callback or list of options
+  # @return {OsomArea} this
+  #
+  autocomplete: (attr)->
+    switch typeof(attr)
+      when 'function'
+        return @startCompleteCalls(attr)
+      when 'string'
+        @menu.update(attr)
+      when 'object'
+        @menu.update("<a href='#'>#{attr.join("</a><a href='#'>")}</a>")
+
+    @_requesting = false
+    @menu.showAt(@)
+
+    return @
+
+# protected
+
+  #
+  # Initializes the auto-completion calls to the callback function
+  #
+  # @param {Function} callback
+  # @return {OsomArea} this
+  #
+  startCompleteCalls: (callback)->
+    @on 'keyup', =>
+      last_word = @_.value.substr(0, @selection.position()[0]).split(/\s+/).pop()
+
+      if last_word && last_word isnt @_prev_last_word && !@_requesting
+        @_prev_last_word = last_word
+        @_timeout && global.clearTimeout(@_timeout)
+        @_timeout = global.setTimeout =>
+          @_requesting = true
+          callback.call(@, last_word)
+        , 200
