@@ -93,7 +93,7 @@ class OsomArea extends Input
   #
   startCompleteCalls: (callback)->
     @on 'keyup', (event)=>
-      return if event.keyCode in [37,38,39,40] # arrow keys navigation
+      return if event.keyCode in [37,38,39,40,13,27,32] # skipping navigation keys and so on
 
       last_word = @_.value.substr(0, @selection.offsets()[0]).split(/\s+/).pop()
 
