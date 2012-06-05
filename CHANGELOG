@@ -1,3 +1,10 @@
+2012-06-05 Nikolay Nemshilov
+
+  * Version 1.1.0 release
+  * Context menu feature added
+  * Autocompletion feature added
+  * Selection#position -> Selection#offsets rename
+
 2012-05-31 Nikolay Nemshilov
 
   * Version 1.0.0 release

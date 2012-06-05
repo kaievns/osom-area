@@ -42,6 +42,8 @@ Also every `OsomArea` instances has a property called `selection` with the follo
     area.selection.text();            // returns currently selected text
     area.selection.text('some text'); // selects matching text in the textarea
 
+    area.selection.position();        // returns absolute position of the cursor in the document
+
     area.selection.save();            // saves the current selection range
     area.selection.restore();         // restores previously saved selection range
 
