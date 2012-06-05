@@ -39,7 +39,7 @@ class Selection
         start  = finish
         finish = result
 
-      result = textarea.value.length - 1
+      result = textarea.value.length
 
       start  = 0 if start  < 0
       finish = 0 if finish < 0
