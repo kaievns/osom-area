@@ -28,6 +28,8 @@ class OsomArea extends Input
     @selection = new Selection(@)
     @menu      = new UI.Menu()
 
+    @menu.on('pick', (event)=> @tryComplete(event.link.text()))
+
     @setOptions(options)
 
   #
@@ -76,6 +78,8 @@ class OsomArea extends Input
       @menu.insertTo(@, 'after')
       @menu.position(@selection.position())
       @menu.show()
+    else
+      @menu.hide()
 
     return @
 
@@ -88,8 +92,10 @@ class OsomArea extends Input
   # @return {OsomArea} this
   #
   startCompleteCalls: (callback)->
-    @on 'keyup', =>
-      last_word = @_.value.substr(0, @selection.position()[0]).split(/\s+/).pop()
+    @on 'keyup', (event)=>
+      return if event.keyCode in [37,38,39,40] # arrow keys navigation
+
+      last_word = @_.value.substr(0, @selection.offsets()[0]).split(/\s+/).pop()
 
       if last_word && last_word isnt @_prev_last_word && !@_requesting
         @_prev_last_word = last_word
@@ -99,3 +105,30 @@ class OsomArea extends Input
           @menu.hide()
           callback.call(@, last_word)
         , 200
+
+  #
+  # Tries to auto-complete the text from the current position with given string
+  #
+  # @param {String} text
+  # @return {OsomArea} this
+  #
+  tryComplete: (text)->
+    offsets = @selection.offsets()
+    value   = @_.value
+    start   = value.substr(0, offsets[0])
+    end     = value.substr(offsets[1], value.length)
+
+    # merging the start string and the completion text
+    for i in [text.length..0]
+      if start.substr(start.length - i, start.length) is text.substr(0, i)
+        start = start.substr(0, start.length - i)
+        break
+
+
+    @_.value = start + text + end
+
+    offsets = (start + text).length
+
+    @selection.offsets offsets, offsets
+
+    return @
