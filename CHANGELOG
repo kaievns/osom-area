@@ -1,5 +1,13 @@
 2012-06-05 Nikolay Nemshilov
 
+  * Version 1.1.1
+  * Selections handling fixes
+  * Autocompleter fixes
+  * More correct completion menu positioning
+  * Adding ability to skip the completion feature
+
+2012-06-05 Nikolay Nemshilov
+
   * Version 1.1.0 release
   * Context menu feature added
   * Autocompletion feature added
