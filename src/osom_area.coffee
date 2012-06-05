@@ -112,8 +112,9 @@ class OsomArea extends Input
         @_timeout = global.setTimeout =>
           @_requesting = true
           @menu.hide()
-          callback.call(@, last_word)
-        , 200
+          if callback.call(@, last_word) is false
+            @_requesting = false # allowing the application scripts to skip the completion
+        , 100
 
   #
   # Tries to auto-complete the text from the current position with given string
