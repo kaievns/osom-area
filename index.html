@@ -36,7 +36,7 @@
                 url += encodeURIComponent(last_word.replace(/[_-]+/g, ' '));
 
             Ajax.get(url, {jsonp: 'callback', success: function() {
-              t3.autocomplete(this.responseJSON[1], last_word);
+              t3.autocomplete(this.responseJSON[1]);
             }});
           });
         });

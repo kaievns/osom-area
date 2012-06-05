@@ -7,8 +7,9 @@ class OsomArea extends Input
   include: core.Options
   extend:
     Options: # default options
-      autoresize:    true
-      keepselection: false
+      autoresize:       true
+      keepselection:    false
+      minLastWordSize:  2      # minimum size of the last word for the autocompleter to kick in
 
   resizer:   null
   selection: null
@@ -78,14 +79,14 @@ class OsomArea extends Input
     unless @menu.empty()
       # finding the menu position under the last word
       position = @_.value.substr(0, @selection.offsets()[0])
-      position = position.substr(0, position.lastIndexOf(last_word || ' ') + (if last_word then 0 else 1))
+      position = position.substr(0, position.lastIndexOf(last_word || @_prev_last_word))
       position = @resizer.textEndPosition(position)
 
       @menu.insertTo(@, 'after')
       @menu.position(position)
       @menu.show()
 
-      @_last_word = last_word
+      @_last_word = last_word || @_prev_last_word
     else
       @menu.hide()
 
@@ -105,7 +106,7 @@ class OsomArea extends Input
 
       last_word = @_.value.substr(0, @selection.offsets()[0]).split(/\s+/).pop()
 
-      if last_word && last_word isnt @_prev_last_word && !@_requesting
+      if last_word.length >= @options.minLastWordSize && last_word isnt @_prev_last_word && !@_requesting
         @_prev_last_word = last_word
         @_timeout && global.clearTimeout(@_timeout)
         @_timeout = global.setTimeout =>
