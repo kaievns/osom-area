@@ -58,6 +58,7 @@ class OsomArea extends Input
   #     })
   #
   # @param {Function|Array} inital callback or list of options
+  # @param {String} the last word location
   # @return {OsomArea} this
   #
   autocomplete: (attr)->
@@ -75,8 +76,13 @@ class OsomArea extends Input
     @_requesting = false
 
     unless @menu.empty()
+      # finding the menu position under the last word
+      position = @_.value.substr(0, @selection.offsets()[0])
+      position = position.substr(0, position.lastIndexOf(' ') + 1)
+      position = @resizer.textEndPosition(position)
+
       @menu.insertTo(@, 'after')
-      @menu.position(@selection.position())
+      @menu.position(position)
       @menu.show()
     else
       @menu.hide()
