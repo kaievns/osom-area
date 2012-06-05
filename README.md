@@ -51,6 +51,27 @@ Also every `OsomArea` instances has a property called `selection` with the follo
 
  * `autoresize` (default: true) - auto-resize the textarea to fit the text
  * `keepselection` (default: false) - automatically saves/restores the selection range on blur/focus
+ * `minLastWordSize` (default: 2) - minimal last word size when the autocompleter kicks in
+
+
+## Autocompletion
+
+`OsomArea` instances have additional method called `#autcoplete` which can take two types of parameters,
+a callback function where you can make async calls to the server or an Array of options, so you can hook
+up Ajax autocompleter kinda like that
+
+    :js
+    Lovely(['osom-area', 'ajax'], function(OsomArea, Ajax) {
+      var input = new OsomArea();
+
+      input.autocomplete(function(last_word) {
+        Ajax.get('/some-url.json?q='+ last_word, {
+          success: function() {
+            input.autocomplete(this.responseJSON);
+          }
+        });
+      });
+    });
 
 
 ## Copyright And License
