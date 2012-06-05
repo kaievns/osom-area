@@ -61,7 +61,7 @@ class OsomArea extends Input
   # @param {String} the last word location
   # @return {OsomArea} this
   #
-  autocomplete: (attr)->
+  autocomplete: (attr, last_word)->
     switch typeof(attr)
       when 'function'
         return @startCompleteCalls(attr)
@@ -78,12 +78,14 @@ class OsomArea extends Input
     unless @menu.empty()
       # finding the menu position under the last word
       position = @_.value.substr(0, @selection.offsets()[0])
-      position = position.substr(0, position.lastIndexOf(' ') + 1)
+      position = position.substr(0, position.lastIndexOf(last_word || ' ') + (if last_word then 0 else 1))
       position = @resizer.textEndPosition(position)
 
       @menu.insertTo(@, 'after')
       @menu.position(position)
       @menu.show()
+
+      @_last_word = last_word
     else
       @menu.hide()
 
@@ -124,11 +126,13 @@ class OsomArea extends Input
     start   = value.substr(0, offsets[0])
     end     = value.substr(offsets[1], value.length)
 
-    # merging the start string and the completion text
-    for i in [text.length..0]
-      if start.substr(start.length - i, start.length) is text.substr(0, i)
-        start = start.substr(0, start.length - i)
-        break
+    if @_last_word
+      start = start.substr(0, start.lastIndexOf(@_last_word))
+    else # merging the start string and the completion text
+      for i in [text.length..0]
+        if start.substr(start.length - i, start.length) is text.substr(0, i)
+          start = start.substr(0, start.length - i)
+          break
 
 
     @_.value = start + text + end
