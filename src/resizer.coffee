@@ -58,8 +58,8 @@ class Resizer extends Element
   autoResize: (original)->
     @_.innerHTML = original._.value + "\n\n"
     height = @_.offsetHeight
-    if height > @min_height
-      original._.style.height = height + 'px'
+    height = @min_height if height < @min_height
+    original._.style.height = height + 'px'
     return @
 
 
