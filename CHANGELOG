@@ -1,3 +1,9 @@
+2012-06-07 Nikolay Nemshilov
+
+  * Version 1.1.2
+  * Fixing a bug with initial textarea auto-resizing
+  * Fixing a bug with auto-resizing after emptying a textarea data
+
 2012-06-05 Nikolay Nemshilov
 
   * Version 1.1.1
