@@ -6,6 +6,8 @@
     <script src="/core.js"></script>
     <script type="text/javascript">
       Lovely(["osom-area", "ajax"], function(OsomArea, Ajax) {
+        var area = new OsomArea(); // just a check for dummy offline textareas
+
         var $ = Lovely.module('dom');
         $(function() {
           var t1 = new OsomArea('#test-1');
@@ -62,7 +64,16 @@
 
     <h2>Simple Auto-Resizable TextArea</h2>
     <p>
-      <textarea id="test-1"></textarea>
+      <textarea id="test-1">asdfasdf
+      asdfasdf afasdfasdf
+      asdfasdfasdfas fadsf asdfasdf
+      asdf asfasdfsa dfasdfas dfadsf
+      adsf asdfasdfsadf
+
+      sdf asdfasdfasdfasdfasdf
+      adf adsf asdfasd fasdf
+
+      asdf asdfasdfsadfasdf</textarea>
     </p>
 
     <h2>Selections Handling</h2>

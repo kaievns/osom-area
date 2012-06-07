@@ -31,7 +31,7 @@ class Resizer extends Element
     osom_area.on 'focus', => @getReady(osom_area)
     osom_area.on 'keyup', => @autoResize(osom_area) if osom_area.options.autoresize
 
-    @autoResize(osom_area)
+    @getReady(osom_area).autoResize(osom_area)
 
   #
   # Copies the styles from the textarea
@@ -40,10 +40,14 @@ class Resizer extends Element
   # @return {Resizer} this
   #
   getReady: (original)->
-    @insertTo(original, 'after')
-    @style(original.style('font-size,font-family,width,'+
-        'margin-top,margin-left,margin-right,margin-bottom,'+
-        'padding-top,padding-left,padding-right,padding-bottom'))
+    try # the original might not be in the DOM
+      @insertTo(original, 'after')
+      @style(original.style('font-size,font-family,width,'+
+          'margin-top,margin-left,margin-right,margin-bottom,'+
+          'padding-top,padding-left,padding-right,padding-bottom'))
+    catch e
+
+    return @
 
   #
   # Sets an appropriate size for the original textarea
