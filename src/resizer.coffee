@@ -14,22 +14,31 @@ class Resizer extends Element
   # @return {Resizer} this
   #
   constructor: (osom_area)->
-    @$super 'div', style:
-      position:   'absolute'
-      top:        '-999999em'
-      left:       '-999999em'
-      border:     '1px solid grey'
-      overflow:   'none'
-      whiteSpace: 'pre'
-      wordWrap:   'break-word'
-
-    @textarea   = osom_area
+    @textarea   = osom_area.style(position: 'relative')
 
     @min_height = osom_area._.offsetHeight
     @marker     = new Element('div', style: 'display: inline-block; margin: 0; padding: 0; margin-top: 1.2em')
 
-    osom_area.on 'focus', => @getReady(osom_area)
+    @$super 'div', style:
+      position:   'absolute'
+      border:     '0px solid transparent'
+      overflow:   'none'
+      whiteSpace: 'pre'
+      wordWrap:   'break-word'
+      color:      'transparent'
+      minHeight:  @min_height + 'px'
+
+    @anchor     = new Element('div', style:
+      position:   'absolute'
+      margin:     '0'
+      padding:    '0'
+      background: 'none'
+      border:     'none'
+    ).append(@)
+
+    osom_area.on 'focus', => window.setTimeout (=> @getReady(osom_area)), 1
     osom_area.on 'keyup', => @autoResize(osom_area) if osom_area.options.autoresize
+    osom_area.on 'blur',  => @copyBackground(osom_area)
 
     @getReady(osom_area).autoResize(osom_area)
 
@@ -41,13 +50,17 @@ class Resizer extends Element
   #
   getReady: (original)->
     try # the original might not be in the DOM
-      @insertTo(original, 'after')
+      @anchor.insertTo(original, 'before')
       @style(original.style('font-size,font-family,width,'+
           'margin-top,margin-left,margin-right,margin-bottom,'+
-          'padding-top,padding-left,padding-right,padding-bottom'))
+          'padding-top,padding-left,padding-right,padding-bottom,'+
+          'border-top-width,border-left-width,border-right-width,border-bottom-width'))
+      @position(original.position())
+
+      @_border_width = parseInt(@style('border-top-width')) || 0
     catch e
 
-    return @
+    @copyBackground(original)
 
   #
   # Sets an appropriate size for the original textarea
@@ -57,7 +70,7 @@ class Resizer extends Element
   #
   autoResize: (original)->
     @_.innerHTML = original._.value + "\n\n"
-    height = @_.offsetHeight
+    height = @_.offsetHeight - (if @_border_width is 1 then 4 else @_border_width * 2)
     height = @min_height if height < @min_height
     original._.style.height = height + 'px'
     return @
@@ -80,3 +93,15 @@ class Resizer extends Element
     x: text_position.x + mark_position.x - self_position.x
     y: text_position.y + mark_position.y - self_position.y
 
+
+  #
+  # Copies the background colors to the dummy block
+  #
+  # @param {OsomArea} original
+  # @return {Resizer this
+  #
+  copyBackground: (original)->
+    @style(background: original.style(background: '').style('background'))
+    original.style(background: 'transparent')
+
+    return @

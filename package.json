@@ -8,6 +8,6 @@
   "tags":        "forms,textarea",
   "dependencies": {
     "dom"  : "1.2.0",
-    "ui"   : "1.2.0"
+    "ui"   : "2.0.0"
   }
 }
