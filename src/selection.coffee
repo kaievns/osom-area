@@ -78,7 +78,7 @@ class Selection
   # @return {Object} selection position {x: NNN, y: NNN}
   #
   position: ->
-    @textarea.mirror.textEndPosition(@textarea._.value.substr(0, @offsets()[0]))
+    @textarea.mirror.absolute(@offsets()[0])
 
   #
   # Saves the current selection offsets

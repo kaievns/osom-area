@@ -18,7 +18,6 @@ class Mirror extends Element
     @textarea   = osom_area.style(position: 'relative')
 
     @min_height = osom_area._.offsetHeight
-    @marker     = new Element('div', style: 'display: inline-block; margin: 0; padding: 0; margin-top: 1.2em')
 
     @$super 'div', class: 'osom-area', style:
       position:   'absolute'
@@ -78,18 +77,19 @@ class Mirror extends Element
 
 
   #
-  # Calculates the absolute position of the end of the text
+  # Calculates the absolute position of the carret position in the text
+  # used for the context-menu positioning
   #
-  # @param {String} text to measure
+  # @param {Numeric} carret position
   # @return {Object} x-y positions
   #
-  textEndPosition: (text)->
-    @_.innerHTML = text
-    @insert(@marker)
+  absolute: (position)->
+    text          = @_.innerHTML
+    @_.innerHTML  = text.substr(0, position) + '<div class="cursor"></div>' + text.substr(position)
 
     self_position = @position()
-    mark_position = @marker.position()
     text_position = @textarea.position()
+    mark_position = @first('.cursor').position()
 
     x: text_position.x + mark_position.x - self_position.x
     y: text_position.y + mark_position.y - self_position.y
