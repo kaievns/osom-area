@@ -1,17 +1,18 @@
 #
 # This unit mocks the textarea in a DIV element and allows us
-# to calculate the necessary textarea size
+# to calculate the necessary textarea size, absolute text positioning
+# emulate text-highlighting and that sort of stuff
 #
 # Copyright (C) 2012 Nikolay Nemshilov
 #
-class Resizer extends Element
+class Mirror extends Element
 
   #
   # Creates the element and taps into the original
   # textarea events
   #
   # @param {OsomArea} original
-  # @return {Resizer} this
+  # @return {OsomArea.Mirror} this
   #
   constructor: (osom_area)->
     @textarea   = osom_area.style(position: 'relative')
@@ -46,7 +47,7 @@ class Resizer extends Element
   # Copies the styles from the textarea
   #
   # @param {OsomArea} original
-  # @return {Resizer} this
+  # @return {OsomArea.Mirror} this
   #
   getReady: (original)->
     try # the original might not be in the DOM
@@ -66,7 +67,7 @@ class Resizer extends Element
   # Sets an appropriate size for the original textarea
   #
   # @param {OsomArea} original
-  # @return {Resizer} this
+  # @return {OsomArea.Mirror} this
   #
   autoResize: (original)->
     @_.innerHTML = original._.value + "\n\n"
@@ -98,7 +99,7 @@ class Resizer extends Element
   # Copies the background colors to the dummy block
   #
   # @param {OsomArea} original
-  # @return {Resizer} this
+  # @return {OsomArea.Mirror} this
   #
   copyBackground: (original)->
     @style(background: original.style(background: '').style('background'))
@@ -109,7 +110,7 @@ class Resizer extends Element
   #
   # Resets the dummy to have the same exact data as the original
   #
-  # @return {OsomArea.Resizer} this
+  # @return {OsomArea.Mirror} this
   #
   reset: ->
     @_.innerHTML = @textarea._.value

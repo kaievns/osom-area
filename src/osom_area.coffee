@@ -11,8 +11,9 @@ class OsomArea extends Input
       keepselection:    false
       minLastWordSize:  2      # minimum size of the last word for the autocompleter to kick in
 
-  resizer:   null
+  mirror:    null
   selection: null
+  painter:   null
   menu:      null
 
   #
@@ -25,7 +26,7 @@ class OsomArea extends Input
 
     super element
 
-    @resizer   = new Resizer(@)
+    @mirror    = new Mirror(@)
     @selection = new Selection(@)
     @menu      = new ContextMenu(@)
     @painter   = new Painter(@)

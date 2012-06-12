@@ -21,7 +21,7 @@ class Painter
   # @return {OsomArea.Painter} this
   #
   reset: ->
-    @textarea.resizer.reset();
+    @textarea.mirror.reset();
     return @
 
   #

@@ -19,14 +19,14 @@ Input    = $.Input
 
 # glue in your files
 include 'src/osom_area'
-include 'src/resizer'
+include 'src/mirror'
 include 'src/selection'
 include 'src/context_menu'
 include 'src/painter'
 
 exports = ext OsomArea,
   version:     '%{version}'
-  Resizer:     Resizer
+  Mirror:      Mirror
   Selection:   Selection
   ContextMenu: ContextMenu
   Painter:     Painter
