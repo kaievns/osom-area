@@ -18,7 +18,7 @@ class Mirror extends Element
     @textarea   = osom_area.style(position: 'relative')
     @min_height = osom_area._.offsetHeight
 
-    @$super 'div', class: 'osom-area', style: minHeight: @min_height + 'px'
+    @$super 'div', class: 'osom-area'
 
     @anchor     = new Element('div', style:
       position:   'absolute'
@@ -32,7 +32,12 @@ class Mirror extends Element
     osom_area.on 'keyup', => @resize(osom_area) if osom_area.options.autoresize
     osom_area.on 'blur',  => @copyBackground(osom_area)
 
-    @prepare(osom_area).resize(osom_area)
+    @prepare(osom_area).style(minHeight: @min_height + 'px')
+
+    @_size_diff = @_.offsetHeight - osom_area._.offsetHeight
+    @style(minHeight: (@min_height - @_size_diff) + 'px')
+
+    @resize(osom_area)
 
   #
   # Clones the original textarea styles and positiones the mirror underneath the textarea
@@ -49,6 +54,7 @@ class Mirror extends Element
           'border-top-width,border-left-width,border-right-width,border-bottom-width'))
       @position(original.position())
 
+
       @_border_width = parseInt(@style('border-top-width')) || 0
     catch e
 
@@ -62,9 +68,9 @@ class Mirror extends Element
   #
   resize: (original)->
     @_.innerHTML = original._.value + "\n\n"
-    height = @_.offsetHeight - (if @_border_width is 1 then 4 else @_border_width * 2)
+    height = @_.offsetHeight
     height = @min_height if height < @min_height
-    original._.style.height = height + 'px'
+    original._.style.height = (height - @_size_diff) + 'px'
     return @
 
 

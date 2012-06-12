@@ -3,6 +3,7 @@
   * Version 1.2.0
   * UI.core 2.0.0 hooked up
   * Dummy DIV location was reworked so that it was showed underneath the textarea elements
+  * The dummy DIV handler code reworked for more correct resizing and menu positioning
 
 
 2012-06-07 Nikolay Nemshilov
