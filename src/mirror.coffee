@@ -16,17 +16,9 @@ class Mirror extends Element
   #
   constructor: (osom_area)->
     @textarea   = osom_area.style(position: 'relative')
-
     @min_height = osom_area._.offsetHeight
 
-    @$super 'div', class: 'osom-area', style:
-      position:   'absolute'
-      border:     '0px solid transparent'
-      overflow:   'none'
-      whiteSpace: 'pre'
-      wordWrap:   'break-word'
-      color:      'transparent'
-      minHeight:  @min_height + 'px'
+    @$super 'div', class: 'osom-area', style: minHeight: @min_height + 'px'
 
     @anchor     = new Element('div', style:
       position:   'absolute'
@@ -36,19 +28,19 @@ class Mirror extends Element
       border:     'none'
     ).append(@)
 
-    osom_area.on 'focus', => window.setTimeout (=> @getReady(osom_area)), 1
+    osom_area.on 'focus', => window.setTimeout (=> @prepare(osom_area)), 1
     osom_area.on 'keyup', => @autoResize(osom_area) if osom_area.options.autoresize
     osom_area.on 'blur',  => @copyBackground(osom_area)
 
-    @getReady(osom_area).autoResize(osom_area)
+    @prepare(osom_area).autoResize(osom_area)
 
   #
-  # Copies the styles from the textarea
+  # Clones the original textarea styles and positiones the mirror underneath the textarea
   #
   # @param {OsomArea} original
   # @return {OsomArea.Mirror} this
   #
-  getReady: (original)->
+  prepare: (original)->
     try # the original might not be in the DOM
       @anchor.insertTo(original, 'before')
       @style(original.style('font-size,font-family,width,'+
