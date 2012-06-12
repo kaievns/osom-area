@@ -24,8 +24,9 @@ include 'src/selection'
 include 'src/context_menu'
 include 'src/painter'
 
-return ext OsomArea,
-  Resizer:   Resizer
-  Selection: Selection
-  Painter:   Painter
-  version:   '%{version}'
+exports = ext OsomArea,
+  version:     '%{version}'
+  Resizer:     Resizer
+  Selection:   Selection
+  ContextMenu: ContextMenu
+  Painter:     Painter
