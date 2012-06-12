@@ -27,7 +27,7 @@ class OsomArea extends Input
 
     @resizer   = new Resizer(@)
     @selection = new Selection(@)
-    @menu      = new UI.Menu()
+    @menu      = new ContextMenu(@)
     @painter   = new Painter(@)
 
     @menu.on('pick', (event)=> @tryComplete(event.link.text()))
@@ -64,32 +64,10 @@ class OsomArea extends Input
   # @return {OsomArea} this
   #
   autocomplete: (attr, last_word)->
-    switch typeof(attr)
-      when 'function'
-        return @startCompleteCalls(attr)
-      when 'string'
-        @menu.update(attr)
-      when 'object'
-        if attr.length is 0
-          @menu.clear()
-        else
-          @menu.update("<a href='#'>#{attr.join("</a><a href='#'>")}</a>")
+    return @startCompleteCalls(attr) if typeof(attr) is 'function'
 
     @_requesting = false
-
-    unless @menu.empty()
-      # finding the menu position under the last word
-      position = @_.value.substr(0, @selection.offsets()[0])
-      position = position.substr(0, position.lastIndexOf(last_word || @_prev_last_word))
-      position = @resizer.textEndPosition(position)
-
-      @menu.insertTo(@, 'after')
-      @menu.position(position)
-      @menu.show()
-
-      @_last_word = last_word || @_prev_last_word
-    else
-      @menu.hide()
+    @menu.tryShow(last_word)
 
     return @
 

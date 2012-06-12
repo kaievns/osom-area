@@ -21,6 +21,7 @@ Input    = $.Input
 include 'src/osom_area'
 include 'src/resizer'
 include 'src/selection'
+include 'src/context_menu'
 include 'src/painter'
 
 return ext OsomArea,
