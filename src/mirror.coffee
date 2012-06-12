@@ -29,10 +29,10 @@ class Mirror extends Element
     ).append(@)
 
     osom_area.on 'focus', => window.setTimeout (=> @prepare(osom_area)), 1
-    osom_area.on 'keyup', => @autoResize(osom_area) if osom_area.options.autoresize
+    osom_area.on 'keyup', => @resize(osom_area) if osom_area.options.autoresize
     osom_area.on 'blur',  => @copyBackground(osom_area)
 
-    @prepare(osom_area).autoResize(osom_area)
+    @prepare(osom_area).resize(osom_area)
 
   #
   # Clones the original textarea styles and positiones the mirror underneath the textarea
@@ -60,7 +60,7 @@ class Mirror extends Element
   # @param {OsomArea} original
   # @return {OsomArea.Mirror} this
   #
-  autoResize: (original)->
+  resize: (original)->
     @_.innerHTML = original._.value + "\n\n"
     height = @_.offsetHeight - (if @_border_width is 1 then 4 else @_border_width * 2)
     height = @min_height if height < @min_height
