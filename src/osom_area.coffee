@@ -19,7 +19,7 @@ class OsomArea extends Input
   # Basic constructor
   #
   constructor: (element, options)->
-    element = $(element) if typeof(element) is 'string'
+    element = $(element) if isString(element)
     element = element[0] if element instanceof $.NodeList
     element = element._  if element instanceof Element
 
@@ -28,6 +28,7 @@ class OsomArea extends Input
     @resizer   = new Resizer(@)
     @selection = new Selection(@)
     @menu      = new UI.Menu()
+    @painter   = new Painter(@)
 
     @menu.on('pick', (event)=> @tryComplete(event.link.text()))
 
@@ -90,6 +91,20 @@ class OsomArea extends Input
     else
       @menu.hide()
 
+    return @
+
+  #
+  # Just bypassing the arguments to the painter object
+  #
+  # To reset all the highligthings call the method with `null`
+  #
+  # @param {String|Number|Regexp} a string/regexp patter to highlight, or an integer starting index
+  # @param {Number|String} highlighting end position or the highighting color
+  # @param {String|undefined} the highlighting color
+  # @return {OsomArea} this
+  #
+  paint: ->
+    @painter.highlight.apply(@painter.arguments)
     return @
 
 # protected

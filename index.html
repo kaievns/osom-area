@@ -13,6 +13,7 @@
           var t1 = new OsomArea('#test-1');
           var t2 = new OsomArea('#test-2');
           var t3 = new OsomArea('#test-3');
+          var t4 = new OsomArea('#test-4');
 
           t2.on('keyup', function() {
             $('#select-range').value(this.selection.offsets().join('-'));
@@ -41,21 +42,34 @@
               t3.autocomplete(this.responseJSON[1]);
             }});
           });
+
+          $('#highlight-text').on('keyup', function(event) {
+            if (event.keyCode == 13) {
+              t4.paint(this.value());
+            }
+          });
+
+          $('#highlight-range').on('keyup', function(event) {
+            var match = this.value().match(/(\d+)\s*\-\s*(\d+)/);
+            if (match && event.keyCode == 13) {
+              t2.paint(match[1], match[2], 'orange');
+            }
+          });
         });
       });
     </script>
     <style>
-      #test-1, #test-2, #test-3 {
+      #test-1, #test-2, #test-3, #test-4 {
         width:  32em;
         height: 4em;
         font:   inherit;
         border: 1px solid rgba(0,0,0,.2);
         border-radius: .25em;
       }
-      #test-1:focus, #test-2:focus, #test-3:focus {
+      #test-1:focus, #test-2:focus, #test-3:focus, #test-4:focus {
         background: rgba(255,255,0,.1);
       }
-      #selection-inputs * {
+      #selection-inputs *, #highlight-inputs * {
         display: inline;
         vertical-align: middle;
         width: 10em;
@@ -85,6 +99,18 @@
     <h2>Autocomplete Example</h2>
     <p>
       <textarea id="test-3"></textarea>
+    </p>
+
+    <h2>Text Highlighting</h2>
+    <p>
+      <textarea id="test-4">Lorem ipsum bla bla bla</textarea>
+
+      <div id="highlight-inputs">
+        <label>Select text:</label>
+        <input type="text" id="highlight-text" placeholder="Type in a word">
+        <label>Select range:</label>
+        <input type="text" id="highlight-range" placeholder="0-0">
+      </div>
     </p>
 
     <p class="white-space"></p>

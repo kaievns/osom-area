@@ -4,6 +4,8 @@ Osom-Area is custom textarea wrapper for lovely.io, features:
 
  * Automatic resize
  * Simplified selections handling
+ * Built in context-menu feature
+ * Text highlighting feature
 
 ## Usage Principles
 

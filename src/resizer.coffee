@@ -19,7 +19,7 @@ class Resizer extends Element
     @min_height = osom_area._.offsetHeight
     @marker     = new Element('div', style: 'display: inline-block; margin: 0; padding: 0; margin-top: 1.2em')
 
-    @$super 'div', style:
+    @$super 'div', class: 'osom-area', style:
       position:   'absolute'
       border:     '0px solid transparent'
       overflow:   'none'
@@ -98,10 +98,20 @@ class Resizer extends Element
   # Copies the background colors to the dummy block
   #
   # @param {OsomArea} original
-  # @return {Resizer this
+  # @return {Resizer} this
   #
   copyBackground: (original)->
     @style(background: original.style(background: '').style('background'))
     original.style(background: 'transparent')
 
     return @
+
+  #
+  # Resets the dummy to have the same exact data as the original
+  #
+  # @return {OsomArea.Resizer} this
+  #
+  reset: ->
+    @_.innerHTML = @textarea._.value
+    return @
+
