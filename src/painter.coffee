@@ -13,7 +13,7 @@ class Painter
   #
   constructor: (osom_area)->
     @textarea = osom_area
-    @markers  = new Lovely.List()
+    @markers  = []
     @reset()
 
   #
@@ -31,22 +31,12 @@ class Painter
   # @param {String|Number|Regexp} a string/regexp patter to highlight, or an integer starting index
   # @param {Number|String} highlighting end position or the highighting color
   # @param {String|undefined} the highlighting color
+  # @param {Boolean} pass `true` if you want to keep all previous markers
   # @return {OsomArea.Painter} this
   #
-  highlight: (first, second, third)->
-    text = @textarea._.value; @markers = new Lovely.List(); position = 0; index = 0
-
-    if isNumber(first) and isNumber(second)
-      @addMarker(first, second, third)
-
-    else if first instanceof RegExp
-      while match = text.substr(position).match(first)
-        index = text.substr(position).indexOf(match[0])
-        @addMarker(position += index, position += match[0].length, second)
-
-    else if isString(first)
-      while (index = text.substr(position).indexOf(first)) isnt -1
-        @addMarker(position += index, position += first.length, second)
+  highlight: (first, second, third, keep)->
+    @markers = [] unless keep
+    @markers.push([first, second, third])
 
     @paint()
 
@@ -55,10 +45,10 @@ class Painter
   #
   # @return {OsomArea.Painter} this
   #
-  paint: ->
-    text = @textarea._.value; html = ''; index = 0
+  paint: (text)->
+    text or= @textarea._.value; html = ''; index = 0
 
-    @markers.forEach (marker)->
+    for marker in @getMarkers(text)
       html += text.substring(index, marker[0])
       html += '<span class="highlight'
       html += '" style="background:'+ marker[2] if marker[2]
@@ -66,6 +56,7 @@ class Painter
 
       index = marker[1]
 
+    html += text.substring(marker[1]) if marker
     @textarea.mirror._.innerHTML = html
 
     return @
@@ -73,24 +64,36 @@ class Painter
 # protected
 
   #
-  # Adds a marker to the list and
+  # Builds the list of position/color markers out of saved patterns
   #
-  # @param {Number} start position
-  # @param {Number} end position
-  # @param {String} color
-  # @return {OsomArea.Painter} this
+  # @return {Array} list of markers
   #
-  addMarker: (start, finish, color)->
-    return @ if start is finish # skipping empty markers
+  getMarkers: (text)->
+    text or= @textarea._.value; markers = []
 
-    # pushing and sorting
-    @markers.push([start, finish, color]);
-    @markers.sort (a,b)-> a[0] - b[0]
+    for [first, second, third] in @markers
+      position = 0; index = 0;
 
-    clean_list  = new Lovely.List()
-    prev_marker = [0,0,undefined]
+      # a simple point to point marker
+      if isNumber(first) and isNumber(second)
+        markers.push([first, second, third])
 
-    while marker = @markers.shift()
+      # a regular expression based marker
+      else if first instanceof RegExp
+        while match = text.substr(position).match(first)
+          index = text.substr(position).indexOf(match[0])
+          markers.push([position += index, position += match[0].length, second])
+
+      # a plain text based marker
+      else if isString(first)
+        while (index = text.substr(position).indexOf(first)) isnt -1
+          markers.push([position += index, position += first.length, second])
+
+    markers.sort (a,b)-> a[0] - b[0]
+
+    clean_list  = []; prev_marker = [0,0,undefined]
+
+    while marker = markers.shift()
       if marker[0] < prev_marker[1]    # if current marker intersects with the previous one
 
         if marker[2] is prev_marker[2] # if the markers have the same color
@@ -102,6 +105,4 @@ class Painter
 
       clean_list.push(marker)
 
-    @markers = clean_list
-
-    return @
+    return clean_list

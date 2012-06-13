@@ -50,6 +50,8 @@
           });
 
           t4.paint('errors', 'pink');
+          t4.paint(/hey/i, 'lightblue', null, true);
+          t4.paint(/you/i, 'orange', null, true)
 
           $('#highlight-range').on('keyup', function(event) {
             var match = this.value().match(/(\d+)\s*\-\s*(\d+)/);

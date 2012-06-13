@@ -66,7 +66,13 @@ class Mirror extends Element
   # @return {OsomArea.Mirror} this
   #
   resize: (original)->
-    @_.innerHTML = original._.value + "\n\n"
+    value  = original._.value + "\n\n"
+
+    if original.painter is null
+      @_.innerHTML = value
+    else
+      original.painter.paint(value)
+
     height = @_.offsetHeight
     height = @min_height if height < @min_height
     original._.style.height = (height - @_size_diff) + 'px'
