@@ -34,17 +34,19 @@ class Painter
   # @return {OsomArea.Painter} this
   #
   highlight: (first, second, third)->
-    text = @textarea._.value; @markers = new Lovely.List()
+    text = @textarea._.value; @markers = new Lovely.List(); position = 0; index = 0
 
     if isNumber(first) and isNumber(second)
       @addMarker(first, second, third)
-    else if isString(first)
-      position = 0; index = 0
-      while (index = text.substr(position).indexOf(first)) isnt -1
-        @addMarker(position += index, position += first.length, second)
 
     else if first instanceof RegExp
-      console.log(first)
+      while match = text.substr(position).match(first)
+        index = text.substr(position).indexOf(match[0])
+        @addMarker(position += index, position += match[0].length, second)
+
+    else if isString(first)
+      while (index = text.substr(position).indexOf(first)) isnt -1
+        @addMarker(position += index, position += first.length, second)
 
     @paint()
 
