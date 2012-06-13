@@ -56,7 +56,7 @@ class Painter
 
       index = marker[1]
 
-    html += text.substring(marker[1]) if marker
+    html = if marker then html + text.substring(marker[1]) else text
     @textarea.mirror._.innerHTML = html
 
     return @
@@ -69,6 +69,8 @@ class Painter
   # @return {Array} list of markers
   #
   getMarkers: (text)->
+    return [] if @markers.length is 0
+
     text or= @textarea._.value; markers = []
 
     for [first, second, third] in @markers

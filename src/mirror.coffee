@@ -28,7 +28,7 @@ class Mirror extends Element
       border:     'none'
     ).append(@)
 
-    osom_area.on 'focus', => window.setTimeout (=> @prepare(osom_area)), 1
+    osom_area.on 'focus', => window.setTimeout (=> @prepare(osom_area)), 0
     osom_area.on 'keyup', => @resize(osom_area) if osom_area.options.autoresize
     osom_area.on 'blur',  => @copyBackground(osom_area)
 
