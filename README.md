@@ -76,6 +76,21 @@ up Ajax autocompleter kinda like that
     });
 
 
+## Text Highlighting
+
+`OsomArea` instances have method called `#paint` which allows you to highlight certain pieces of text
+
+    :js
+    var input = new OsomArea()
+
+    input.paint('Nikolay'); // will highlight every 'Nikolay' entry with default yellow color
+    input.paint(/nikolay/i, 'pink'); // will hilight everything that matches the re with the pink color
+    input.paint(0, 10, 'lightblue'); // will paint a piece of text at the certain position
+
+__NOTE__: this feature is a bit of a dirty hack. Textareas themselves don't support the feature, so
+there is a certain lag with the highlighting response when the user types in something in the textarea
+
+
 ## Copyright And License
 
 This project is released under the terms of the MIT license
