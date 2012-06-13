@@ -83,7 +83,7 @@ class OsomArea extends Input
   # @return {OsomArea} this
   #
   paint: ->
-    @painter.highlight.apply(@painter.arguments)
+    @painter.highlight.apply(@painter, arguments)
     return @
 
 # protected

@@ -51,11 +51,10 @@ class Mirror extends Element
       @style(original.style('font-size,font-family,width,'+
           'margin-top,margin-left,margin-right,margin-bottom,'+
           'padding-top,padding-left,padding-right,padding-bottom,'+
-          'border-top-width,border-left-width,border-right-width,border-bottom-width'))
+          'border-top-width,border-left-width,border-right-width,'+
+          'border-bottom-width,white-space,word-wrap'))
       @position(original.position())
 
-
-      @_border_width = parseInt(@style('border-top-width')) || 0
     catch e
 
     @copyBackground(original)

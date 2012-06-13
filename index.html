@@ -49,10 +49,12 @@
             }
           });
 
+          t4.paint(/hey/i, 'green');
+
           $('#highlight-range').on('keyup', function(event) {
             var match = this.value().match(/(\d+)\s*\-\s*(\d+)/);
             if (match && event.keyCode == 13) {
-              t2.paint(match[1], match[2], 'orange');
+              t4.paint(parseInt(match[1]), parseInt(match[2]), 'orange');
             }
           });
         });
@@ -88,7 +90,7 @@
 
     <h2>Selections Handling</h2>
     <p>
-      <textarea id="test-2">Lorem ipsum bla bla bla</textarea>
+      <textarea id="test-2">Hey, we've heard you like errors! So we've put some errors inside of your errors, and now you can crash while you're crashing!</textarea>
 
       <div id="selection-inputs">
         <label>Select text:</label>
@@ -98,19 +100,19 @@
       </div>
     </p>
 
-    <h2>Autocomplete Example</h2>
+    <h2>Autocomplete/ContextMenu</h2>
     <p>
       <textarea id="test-3"></textarea>
     </p>
 
     <h2>Text Highlighting</h2>
     <p>
-      <textarea id="test-4">Hey, we've heard you like errors! So we put some errors inside of your errors, and now you can crash while you're crashing!</textarea>
+      <textarea id="test-4">Hey, we've heard you like errors! So we've put some errors inside of your errors, and now you can crash while you're crashing!</textarea>
 
       <div id="highlight-inputs">
-        <label>Select text:</label>
-        <input type="text" id="highlight-text" placeholder="Type in a word">
-        <label>Select range:</label>
+        <label>Highlight text:</label>
+        <input type="text" id="highlight-text" value="errors" placeholder="Type in a word">
+        <label>Highlight range:</label>
         <input type="text" id="highlight-range" placeholder="0-0">
       </div>
     </p>
