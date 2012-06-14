@@ -82,12 +82,14 @@ class Mirror extends Element
   # @return {Object} x-y positions
   #
   absolute: (position)->
-    text          = @_.innerHTML
+    text          = @textarea._.value
     @_.innerHTML  = text.substr(0, position) + '<div class="cursor"></div>' + text.substr(position)
 
     self_position = @position()
     text_position = @textarea.position()
     mark_position = @first('.cursor').position()
+
+    @resize()
 
     x: text_position.x + mark_position.x - self_position.x
     y: text_position.y + mark_position.y - self_position.y
