@@ -35,6 +35,8 @@ class OsomArea extends Input
 
     @setOptions(options)
 
+    @repaint()
+
   #
   # Universal method to work with the selections
   #
@@ -85,6 +87,23 @@ class OsomArea extends Input
   paint: ->
     @painter.highlight.apply(@painter, arguments)
     return @
+
+  #
+  # Calls in the complete resize/repaint on the textarea
+  #
+  # @return {OsomArea} this
+  #
+  repaint: ->
+    @mirror.resize()
+    return @
+
+  # making the textarea to get repainted with a context or style was changed
+  value:       -> Input::value.apply(@, arguments);         @repaint()
+  setClass:    -> Element::setClass.apply(@, arguments);    @repaint()
+  addClass:    -> Element::addClass.apply(@, arguments);    @repaint()
+  removeClass: -> Element::removeClass.apply(@, arguments); @repaint()
+  toggleClass: -> Element::toggleClass.apply(@, arguments); @repaint()
+  radioClass:  -> Element::radioClass.apply(@, arguments);  @repaint()
 
 # protected
 

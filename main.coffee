@@ -13,6 +13,7 @@ UI       = require('ui')
 ext      = core.ext
 isString = core.isString
 isNumber = core.isNumber
+isArray  = core.isArray
 Class    = core.Class
 Element  = $.Element
 Input    = $.Input
