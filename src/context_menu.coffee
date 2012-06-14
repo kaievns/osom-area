@@ -31,7 +31,9 @@ class ContextMenu extends UI.Menu
       # finding the menu position under the last word
       position = @textarea.value().substr(0, @textarea.selection.offsets()[0])
       position = position.lastIndexOf(last_word || @textarea._prev_last_word)
-      position = @textarea.mirror.absolute()
+      position = @textarea.mirror.absolute(position)
+
+      position.y += 3; position.x -= 1
 
       @insertTo(@textarea, 'after')
       @position(position)

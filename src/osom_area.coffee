@@ -70,7 +70,7 @@ class OsomArea extends Input
     return @startCompleteCalls(attr) if typeof(attr) is 'function'
 
     @_requesting = false
-    @menu.tryShow(last_word)
+    @menu.tryShow(attr, last_word)
 
     return @
 
@@ -98,7 +98,7 @@ class OsomArea extends Input
     return @
 
   # making the textarea to get repainted with a context or style was changed
-  value:       -> Input::value.apply(@, arguments);         @repaint()
+  value:       -> res = Input::value.apply(@, arguments);   @repaint(); res
   setClass:    -> Element::setClass.apply(@, arguments);    @repaint()
   addClass:    -> Element::addClass.apply(@, arguments);    @repaint()
   removeClass: -> Element::removeClass.apply(@, arguments); @repaint()

@@ -38,7 +38,7 @@
             var url  = "http://suggestqueries.google.com/complete/search?client=chrome&q=";
                 url += encodeURIComponent(last_word.replace(/[_-]+/g, ' '));
 
-            Ajax.get(url, {jsonp: 'callback', success: function() {
+            Ajax.get(url, {jsonp: true, success: function() {
               t3.autocomplete(this.responseJSON[1]);
             }});
           });
