@@ -1,3 +1,9 @@
+2012-08-02 Nikolay Nemshilov
+
+  * Version 1.2.1
+  * Firefox related fixes for the word-wrap properties
+  * Background cloning fix for mobile browsers
+
 2012-06-13 Nikolay Nemshilov
 
   * Version 1.2.0
