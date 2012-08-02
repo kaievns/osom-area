@@ -53,8 +53,6 @@ class Mirror extends Element
           'border-top-width,border-left-width,border-right-width,'+
           'border-bottom-width'))
 
-      console.log(@textarea.style('white-space'))
-      console.log(@textarea.style('word-wrap'))
       @position(@textarea.position())
 
     catch e
@@ -104,7 +102,7 @@ class Mirror extends Element
   # @return {OsomArea.Mirror} this
   #
   copyBackground: ()->
-    @style(background: @textarea.style(background: '').style('background'))
+    @style(@textarea.style(background: '').style('backgroundColor,backgroundImage,backgroundRepeat,backgroundPosition'))
     @textarea.style(background: 'transparent')
 
     return @
